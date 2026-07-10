@@ -204,7 +204,8 @@ class BaseEEGReader(ABC):
         if self.scheme_type == "pairs":
             contact_1_to_index_df = pd.DataFrame({'contact_1': contacts}).reset_index()
             contact_2_to_index_df = pd.DataFrame({'contact_2': contacts}).reset_index()
-            bp_pairs = self.scheme.reset_index(names='pairs_index')
+            bp_pairs = self.scheme.reset_index()
+            bp_pairs.rename(columns={'index': 'pairs_index'}, inplace=True)
             bp_pairs_to_index_df = bp_pairs.merge(contact_1_to_index_df
                                                   ).merge(contact_2_to_index_df,
                                                           on='contact_2', suffixes=('_1', '_2')
